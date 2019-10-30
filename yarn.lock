@@ -1345,6 +1345,11 @@ extglob@^2.0.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
+extract-tagged-template-literals@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/extract-tagged-template-literals/-/extract-tagged-template-literals-1.0.1.tgz#c44e030d3aabc67a9525df8881de2504ff32b3b1"
+  integrity sha512-yN2arFj4hEiaqdPxPWCdM60Y+vITPIBlklbLqSDskYvmoCqK1YqV2cr+W+vcUZrZBuk9st7WLEkux5W7gdQXQQ==
+
 fast-deep-equal@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-2.0.1.tgz#7b05218ddf9667bf7f370bf7fdb2cb15fdd0aa49"

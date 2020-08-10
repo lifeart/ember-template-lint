@@ -248,12 +248,13 @@ Each rule has emojis denoting:
 |                            | [no-yield-only](./docs/rule/no-yield-only.md)                                              |
 | :dress:                    | [quotes](./docs/rule/quotes.md)                                                            |
 | :white_check_mark::wrench: | [require-button-type](./docs/rule/require-button-type.md)                                  |
+|                            | [require-context-role](./docs/rule/require-context-role.md)                                |
 |                            | [require-form-method](./docs/rule/require-form-method.md)                                  |
 | :white_check_mark:         | [require-iframe-title](./docs/rule/require-iframe-title.md)                                |
 |                            | [require-input-label](./docs/rule/require-input-label.md)                                  |
 |                            | [require-lang-attribute](./docs/rule/require-lang-attribute.md)                            |
-| :dress:                    | [self-closing-void-elements](./docs/rule/self-closing-void-elements.md)                    |
 | :white_check_mark:         | [require-valid-alt-text](./docs/rule/require-valid-alt-text.md)                            |
+| :dress:                    | [self-closing-void-elements](./docs/rule/self-closing-void-elements.md)                    |
 | :white_check_mark:         | [simple-unless](./docs/rule/simple-unless.md)                                              |
 | :white_check_mark:         | [style-concatenation](./docs/rule/style-concatenation.md)                                  |
 | :white_check_mark:         | [table-groups](./docs/rule/table-groups.md)                                                |

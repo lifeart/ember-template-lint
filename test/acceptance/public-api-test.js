@@ -1,11 +1,13 @@
 'use strict';
 
-const path = require('path');
 const fs = require('fs');
-const Linter = require('../../lib');
-const buildFakeConsole = require('./../helpers/console');
-const Project = require('../helpers/fake-project');
+const path = require('path');
+
 const chalk = require('chalk');
+
+const Linter = require('../../lib');
+const Project = require('../helpers/fake-project');
+const buildFakeConsole = require('./../helpers/console');
 
 const fixturePath = path.join(__dirname, '..', '/fixtures');
 
@@ -212,6 +214,44 @@ describe('public api', function () {
 
       linter.console.log(expected);
       expect(actual).toEqual(expected);
+    });
+
+    it('instantiating linter is idempotent', function () {
+      project.setConfig({
+        rules: {
+          'require-button-type': 'error',
+        },
+        overrides: [{ files: '**/templates/*.hbs', rules: { 'require-button-type': 'off' } }],
+      });
+
+      let linterA = new Linter({
+        console: mockConsole,
+        configPath: project.path('.template-lintrc.js'),
+      });
+
+      let linterB = new Linter({
+        console: mockConsole,
+        configPath: project.path('.template-lintrc.js'),
+      });
+
+      expect(linterA.config.rules['require-button-type']).toEqual({
+        config: true,
+        severity: 2,
+      });
+
+      expect(linterA.config.overrides).toEqual([
+        {
+          files: '**/templates/*.hbs',
+          rules: {
+            'require-button-type': {
+              config: false,
+              severity: 0,
+            },
+          },
+        },
+      ]);
+
+      expect(linterA.config).toEqual(linterB.config);
     });
   });
 

@@ -1,3 +1,143 @@
+## v2.14.0 (2020-10-11)
+
+#### :rocket: Enhancement
+* [#1564](https://github.com/ember-template-lint/ember-template-lint/pull/1564) Add `--working-directory` option ([@rwjblue](https://github.com/rwjblue))
+* [#1550](https://github.com/ember-template-lint/ember-template-lint/pull/1550) Add new rule `no-duplicate-landmark-elements` ([@MelSumner](https://github.com/MelSumner))
+* [#1519](https://github.com/ember-template-lint/ember-template-lint/pull/1519) Add `as-indentation` option to `attribute-indentation` rule ([@VincentMolinie](https://github.com/VincentMolinie))
+
+#### :bug: Bug Fix
+* [#1566](https://github.com/ember-template-lint/ember-template-lint/pull/1566) Allow `itemprop` use in meta tags in `no-invalid-meta` rule ([@sukima](https://github.com/sukima))
+* [#1554](https://github.com/ember-template-lint/ember-template-lint/pull/1554) Ensure globbing is only used when using a globlike pattern ([@rwjblue](https://github.com/rwjblue))
+* [#1541](https://github.com/ember-template-lint/ember-template-lint/pull/1541) Allow nested landmarks of different types in `no-nested-landmark` rule ([@zelaznik](https://github.com/zelaznik))
+* [#1548](https://github.com/ember-template-lint/ember-template-lint/pull/1548) Upgrade ember-template-recast to reduce memory pressure while linting ([@dcyriller](https://github.com/dcyriller))
+
+#### :house: Internal
+* [#1518](https://github.com/ember-template-lint/ember-template-lint/pull/1518) chore(deps): bump yargs from 15.4.1 to 16.0.3 ([@dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+
+#### Committers: 7
+- Cyrille David ([@dcyriller](https://github.com/dcyriller))
+- Devin Weaver ([@sukima](https://github.com/sukima))
+- Melanie Sumner ([@MelSumner](https://github.com/MelSumner))
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+- Steve Zelaznik ([@zelaznik](https://github.com/zelaznik))
+- Vincent Molinié ([@VincentMolinie](https://github.com/VincentMolinie))
+- [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview)
+
+
+## v2.13.0 (2020-09-27)
+
+#### :rocket: Enhancement
+* [#1521](https://github.com/ember-template-lint/ember-template-lint/pull/1521) Add new rule `no-aria-hidden-body` ([@rajasegar](https://github.com/rajasegar))
+* [#1465](https://github.com/ember-template-lint/ember-template-lint/pull/1465) Add new rule `builtin-component-arguments` ([@Turbo87](https://github.com/Turbo87))
+* [#1525](https://github.com/ember-template-lint/ember-template-lint/pull/1525) Add new rule `require-each-key` ([@rajasegar](https://github.com/rajasegar))
+
+#### :bug: Bug Fix
+* [#1516](https://github.com/ember-template-lint/ember-template-lint/pull/1516) `no-whitespace-within-word` rule should ignore <style> elements ([@mydea](https://github.com/mydea))
+* [#1540](https://github.com/ember-template-lint/ember-template-lint/pull/1540) `require-input-label` rule should ignore hidden inputs ([@bmish](https://github.com/bmish))
+* [#1543](https://github.com/ember-template-lint/ember-template-lint/pull/1543) `no-invalid-block-param-definition` rule should ignore comments ([@bmish](https://github.com/bmish))
+* [#1533](https://github.com/ember-template-lint/ember-template-lint/pull/1533) Add missing `keygen` element to `no-obsolete-elements` rule elements list ([@bmish](https://github.com/bmish))
+* [#1495](https://github.com/ember-template-lint/ember-template-lint/pull/1495) Ensure `overrides` config parsing is idempotent ([@bobisjan](https://github.com/bobisjan))
+
+#### :house: Internal
+* [#1537](https://github.com/ember-template-lint/ember-template-lint/pull/1537) Remove unnecessary deprecations folder for rules ([@bmish](https://github.com/bmish))
+
+#### Committers: 6
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+- Francesco Novy ([@mydea](https://github.com/mydea))
+- Jan Bobisud ([@bobisjan](https://github.com/bobisjan))
+- Rajasegar Chandran ([@rajasegar](https://github.com/rajasegar))
+- Tobias Bieniek ([@Turbo87](https://github.com/Turbo87))
+- [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview)
+
+
+## v2.12.1 (2020-09-11)
+
+#### :bug: Bug Fix
+* [#1514](https://github.com/ember-template-lint/ember-template-lint/pull/1514) Ensure `bad` test cases **always** have results. ([@rwjblue](https://github.com/rwjblue))
+
+#### :house: Internal
+* [#1510](https://github.com/ember-template-lint/ember-template-lint/pull/1510) Update automated release setup. ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 2
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+- [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview)
+
+
+## v2.12.0 (2020-09-09)
+
+#### :boom: Breaking Change
+* [#1509](https://github.com/ember-template-lint/ember-template-lint/pull/1509) Add `no-duplicate-id` to `a11y` preset ([@rwjblue](https://github.com/rwjblue))
+* [#1505](https://github.com/ember-template-lint/ember-template-lint/pull/1505) Add `no-duplicate-attributes` to `a11y` preset ([@MelSumner](https://github.com/MelSumner))
+
+#### :rocket: Enhancement
+* [#1187](https://github.com/ember-template-lint/ember-template-lint/pull/1187) Adds new rule: no-duplicate-id ([@MelSumner](https://github.com/MelSumner))
+* [#1504](https://github.com/ember-template-lint/ember-template-lint/pull/1504) Update documentation for `no-duplicate-attributes` ([@MelSumner](https://github.com/MelSumner))
+* [#1466](https://github.com/ember-template-lint/ember-template-lint/pull/1466) Cache `pending`/`ignore` config lookups to speed up linting of larger codebases ([@fivetanley](https://github.com/fivetanley))
+
+#### :bug: Bug Fix
+* [#1497](https://github.com/ember-template-lint/ember-template-lint/pull/1497) Avoid validating text within attributes in `no-whitespace-within-word` ([@zelaznik](https://github.com/zelaznik))
+
+#### :memo: Documentation
+* [#1504](https://github.com/ember-template-lint/ember-template-lint/pull/1504) Update documentation for `no-duplicate-attributes` ([@MelSumner](https://github.com/MelSumner))
+
+#### Committers: 5
+- Melanie Sumner ([@MelSumner](https://github.com/MelSumner))
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+- Stanley Stuart ([@fivetanley](https://github.com/fivetanley))
+- Steve Zelaznik ([@zelaznik](https://github.com/zelaznik))
+- [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview)
+
+
+## v2.11.0 (2020-08-27)
+
+#### :rocket: Enhancement
+* [#1489](https://github.com/ember-template-lint/ember-template-lint/pull/1489) Add `allowlist` & `denylist` alternatives to `whitelist` & `blacklist` configuration ([@jaydgruber](https://github.com/jaydgruber))
+* [#1443](https://github.com/ember-template-lint/ember-template-lint/pull/1443) Add new `a11y` configuration ([@MelSumner](https://github.com/MelSumner))
+* [#1481](https://github.com/ember-template-lint/ember-template-lint/pull/1481) `no-bare-strings`: export `DEFAULT_CONFIG` ([@jaydgruber](https://github.com/jaydgruber))
+* [#1439](https://github.com/ember-template-lint/ember-template-lint/pull/1439) `require-input-label`: update rule to detect duplicate labels ([@KamiKillertO](https://github.com/KamiKillertO))
+* [#1430](https://github.com/ember-template-lint/ember-template-lint/pull/1430) Add `.match` API via new `NodeMatcher` helper ([@josephdsumner](https://github.com/josephdsumner))
+* [#1464](https://github.com/ember-template-lint/ember-template-lint/pull/1464) `no-quoteless-attributes`: Adjust error message for component arguments ([@Turbo87](https://github.com/Turbo87))
+* [#1474](https://github.com/ember-template-lint/ember-template-lint/pull/1474) `link-rel-noopener`: add `--fix` support ([@fivetanley](https://github.com/fivetanley))
+* [#1462](https://github.com/ember-template-lint/ember-template-lint/pull/1462) `no-invalid-interactive`: Only warn about known disallowed DOM events in the `on` modifier ([@Turbo87](https://github.com/Turbo87))
+* [#1461](https://github.com/ember-template-lint/ember-template-lint/pull/1461) `no-invalid-interactive`: Add `canvas` to the list of interactive tag names ([@Turbo87](https://github.com/Turbo87))
+* [#1459](https://github.com/ember-template-lint/ember-template-lint/pull/1459) Implement `no-link-to-tagname` rule ([@Turbo87](https://github.com/Turbo87))
+* [#1458](https://github.com/ember-template-lint/ember-template-lint/pull/1458) `no-arguments-for-html-elements`: Extract `no-block-params-for-html-elements` rule ([@Turbo87](https://github.com/Turbo87))
+* [#1457](https://github.com/ember-template-lint/ember-template-lint/pull/1457) Implement `no-potential-path-strings` rule ([@Turbo87](https://github.com/Turbo87))
+* [#1449](https://github.com/ember-template-lint/ember-template-lint/pull/1449) Implement `no-nested-splattributes` rule ([@Turbo87](https://github.com/Turbo87))
+* [#1450](https://github.com/ember-template-lint/ember-template-lint/pull/1450) Implement `no-redundant-fn` rule ([@Turbo87](https://github.com/Turbo87))
+* [#1316](https://github.com/ember-template-lint/ember-template-lint/pull/1316) Implement `no-positional-data-test-selectors` rule ([@gabrielcsapo](https://github.com/gabrielcsapo))
+* [#1431](https://github.com/ember-template-lint/ember-template-lint/pull/1431) Add `--no-inline-config` option. ([@rwjblue](https://github.com/rwjblue))
+
+#### :bug: Bug Fix
+* [#1136](https://github.com/ember-template-lint/ember-template-lint/pull/1136) `no-curly-component-invocation`: update rule to ignore ember-cli-app-version usage ([@lifeart](https://github.com/lifeart))
+
+#### :memo: Documentation
+* [#1480](https://github.com/ember-template-lint/ember-template-lint/pull/1480) Ensure all rule docs have a references section ([@jaydgruber](https://github.com/jaydgruber))
+* [#1456](https://github.com/ember-template-lint/ember-template-lint/pull/1456) `no-arguments-for-html-elements`: Remove wrong examples from the documentation ([@Turbo87](https://github.com/Turbo87))
+* [#1454](https://github.com/ember-template-lint/ember-template-lint/pull/1454) Fix misspelling of `--print-pending`s help output ([@MelSumner](https://github.com/MelSumner))
+* [#1436](https://github.com/ember-template-lint/ember-template-lint/pull/1436) Add note about github actions printer ([@nadavshatz](https://github.com/nadavshatz))
+
+#### :house: Internal
+* [#1468](https://github.com/ember-template-lint/ember-template-lint/pull/1468) Use `eslint-plugin-import-helpers` to sort imports alphabetically ([@Turbo87](https://github.com/Turbo87))
+* [#1467](https://github.com/ember-template-lint/ember-template-lint/pull/1467) Adjust `new-rule` template ([@Turbo87](https://github.com/Turbo87))
+* [#1455](https://github.com/ember-template-lint/ember-template-lint/pull/1455) Add test to ensure rules list is sorted ([@bmish](https://github.com/bmish))
+* [#1447](https://github.com/ember-template-lint/ember-template-lint/pull/1447) Replace `npm-package-json-lint` with `sort-package-json` ([@Turbo87](https://github.com/Turbo87))
+
+#### Committers: 12
+- Alex Kanunnikov ([@lifeart](https://github.com/lifeart))
+- Benjamin JEGARD ([@KamiKillertO](https://github.com/KamiKillertO))
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+- Gabriel Csapo ([@gabrielcsapo](https://github.com/gabrielcsapo))
+- Joseph D. Sumner ([@josephdsumner](https://github.com/josephdsumner))
+- Melanie Sumner ([@MelSumner](https://github.com/MelSumner))
+- Nadav Shatz ([@nadavshatz](https://github.com/nadavshatz))
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+- Stanley Stuart ([@fivetanley](https://github.com/fivetanley))
+- Tobias Bieniek ([@Turbo87](https://github.com/Turbo87))
+- [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview)
+- [@jaydgruber](https://github.com/jaydgruber)
+
+
 ## v2.10.0 (2020-08-07)
 
 #### :rocket: Enhancement

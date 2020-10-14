@@ -15,23 +15,42 @@ describe('expandFileGlobs', function () {
   });
 
   describe('basic', function () {
-    beforeEach(function () {
+    it('resolves a basic pattern (different working directory)', function () {
+      project.write({ 'application.hbs': 'almost empty' });
+
+      let files = expandFileGlobs(project.baseDir, ['application.hbs', 'other.hbs'], []);
+      expect(files).toEqual(new Set(['application.hbs']));
+    });
+
+    it('respects a basic ignore option (different working directory)', function () {
+      project.write({ 'application.hbs': 'almost empty' });
+
+      let files = expandFileGlobs(
+        project.baseDir,
+        ['application.hbs', 'other.hbs'],
+        ['application.hbs']
+      );
+      expect(files).toEqual(new Set([]));
+    });
+
+    it('resolves a basic pattern (within working directory)', function () {
       project.chdir();
-    });
-
-    it('resolves a basic pattern', function () {
       project.write({ 'application.hbs': 'almost empty' });
 
-      let files = expandFileGlobs(['application.hbs', 'other.hbs'], []);
-      expect(files.has('application.hbs')).toBe(true);
-      expect(files.has('other.hbs')).toBe(false);
+      let files = expandFileGlobs(project.baseDir, ['application.hbs', 'other.hbs'], []);
+      expect(files).toEqual(new Set(['application.hbs']));
     });
 
-    it('respects a basic ignore option', function () {
+    it('respects a basic ignore option (within working directory)', function () {
+      project.chdir();
       project.write({ 'application.hbs': 'almost empty' });
 
-      let files = expandFileGlobs(['application.hbs', 'other.hbs'], ['application.hbs']);
-      expect(files.has('application.hbs')).toBe(false);
+      let files = expandFileGlobs(
+        project.baseDir,
+        ['application.hbs', 'other.hbs'],
+        ['application.hbs']
+      );
+      expect(files).toEqual(new Set([]));
     });
   });
 
@@ -43,14 +62,26 @@ describe('expandFileGlobs', function () {
     it('resolves a glob pattern', function () {
       project.write({ 'application.hbs': 'almost empty' });
 
-      let files = expandFileGlobs(['*'], []);
+      let files = expandFileGlobs(project.baseDir, ['*'], []);
       expect(files.has('application.hbs')).toBe(true);
+    });
+
+    it('does not fallback to globbing if not passed a globlike string', function () {
+      project.write({ 'application.hbs': 'almost empty' });
+
+      let ignorePatterns = [];
+      function glob() {
+        throw new Error('Should not use globbing for exact file matches');
+      }
+
+      let files = expandFileGlobs(project.baseDir, ['application.hbs'], ignorePatterns, glob);
+      expect(files).toEqual(new Set(['application.hbs']));
     });
 
     it('respects a glob ignore option', function () {
       project.write({ 'application.hbs': 'almost empty' });
 
-      let files = expandFileGlobs(['application.hbs'], ['*']);
+      let files = expandFileGlobs(project.baseDir, ['application.hbs'], ['*']);
       expect(files.has('application.hbs')).toBe(false);
     });
   });

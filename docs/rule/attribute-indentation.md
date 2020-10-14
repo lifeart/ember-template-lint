@@ -100,6 +100,20 @@ as |employee|
 {{/employee-details}}
 ```
 
+Block form (as-indentation attribute)
+
+```hbs
+{{#employee-details
+  firstName=firstName
+  lastName=lastName
+  age=age
+  avatarUrl=avatarUrl
+  as |employee|
+}}
+  {{employee.fullName}}
+{{/employee-details}}
+```
+
 Block form (open invocation < 80 characters)
 
 ```hbs
@@ -129,7 +143,14 @@ Block form (HTML)
 * object - { 'process-elements': `true` } - Also validate the indentation of HTML/SVG elements.
 * object - { 'element-open-end': `new-line`|`last-attribute` } - Enforce the position of the closing brace `>` to be on a new line or next to the last attribute (defaults to `new-line`).
 * object - { 'mustache-open-end': `new-line`|`last-attribute` } - Enforce the position of the closing braces `}}` to be on a new line or next to the last attribute (defaults to `new-line`).
+* object - { 'as-indentation': `attribute`|`closing-brace` } - Enforce the position of the `as |param|` to be indented at the same level as closing brace or attribute (defaults to `closing-brace`).
 
 ## Related Rules
 
 * [block-indentation](block-indentation.md)
+* [eslint/max-len](https://eslint.org/docs/rules/max-len)
+* [eslint/indent](https://eslint.org/docs/rules/indent)
+
+## References
+
+* [Google style guide/line wrapping](https://google.github.io/styleguide/htmlcssguide.html#HTML_Line-Wrapping)

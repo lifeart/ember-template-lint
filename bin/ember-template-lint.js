@@ -7,18 +7,21 @@ require('v8-compile-cache'); // eslint-disable-line import/no-unassigned-import
 
 const fs = require('fs');
 const path = require('path');
-const micromatch = require('micromatch');
-const isValidGlob = require('is-valid-glob');
+const { promisify } = require('util');
+
 const getStdin = require('get-stdin');
 const globby = require('globby');
+const isGlob = require('is-glob');
+const micromatch = require('micromatch');
+
 const Linter = require('../lib');
 const processResults = require('../lib/helpers/process-results');
 
-const readFile = require('util').promisify(fs.readFile);
+const readFile = promisify(fs.readFile);
 
 const STDIN = '/dev/stdin';
 
-async function buildLinterOptions(filePath, filename = '', isReadingStdin) {
+async function buildLinterOptions(workingDir, filePath, filename = '', isReadingStdin) {
   if (isReadingStdin) {
     let filePath = filename;
     let moduleId = filePath.slice(0, -4);
@@ -27,7 +30,8 @@ async function buildLinterOptions(filePath, filename = '', isReadingStdin) {
     return { source, filePath, moduleId };
   } else {
     let moduleId = filePath.slice(0, -4);
-    let source = await readFile(path.resolve(filePath), { encoding: 'utf8' });
+    let resolvedFilePath = path.resolve(workingDir, filePath);
+    let source = await readFile(resolvedFilePath, { encoding: 'utf8' });
 
     return { source, filePath, moduleId };
   }
@@ -46,15 +50,23 @@ function lintSource(linter, options, shouldFix) {
   }
 }
 
-function expandFileGlobs(filePatterns, ignorePattern) {
+function executeGlobby(workingDir, pattern, ignore) {
+  // `--no-ignore-pattern` results in `ignorePattern === [false]`
+  let options =
+    ignore[0] === false ? { cwd: workingDir } : { cwd: workingDir, gitignore: true, ignore };
+
+  return globby.sync(pattern, options).filter((filePath) => filePath.slice(-4) === '.hbs');
+}
+
+function expandFileGlobs(workingDir, filePatterns, ignorePattern, glob = executeGlobby) {
   let result = new Set();
 
   filePatterns.forEach((pattern) => {
     let isHBS = pattern.slice(-4) === '.hbs';
-    let isLiteralPath = !isValidGlob(pattern) && fs.existsSync(pattern);
+    let isLiteralPath = !isGlob(pattern) && fs.existsSync(path.resolve(workingDir, pattern));
 
     if (isHBS && isLiteralPath) {
-      let isIgnored = !micromatch.isMatch(pattern, ignorePattern);
+      let isIgnored = micromatch.isMatch(pattern, ignorePattern);
 
       if (!isIgnored) {
         result.add(pattern);
@@ -63,23 +75,19 @@ function expandFileGlobs(filePatterns, ignorePattern) {
       return;
     }
 
-    globby
-      // `--no-ignore-pattern` results in `ignorePattern === [false]`
-      .sync(pattern, ignorePattern[0] === false ? {} : { ignore: ignorePattern, gitignore: true })
-      .filter((filePath) => filePath.slice(-4) === '.hbs')
-      .forEach((filePath) => result.add(filePath));
+    glob(workingDir, pattern, ignorePattern).forEach((filePath) => result.add(filePath));
   });
 
   return result;
 }
 
-function getFilesToLint(filePatterns, ignorePattern = []) {
+function getFilesToLint(workingDir, filePatterns, ignorePattern = []) {
   let files;
 
   if (filePatterns.length === 0 || filePatterns.includes('-') || filePatterns.includes(STDIN)) {
     files = new Set([STDIN]);
   } else {
-    files = expandFileGlobs(filePatterns, ignorePattern);
+    files = expandFileGlobs(workingDir, filePatterns, ignorePattern);
   }
 
   return files;
@@ -126,13 +134,22 @@ function parseArgv(_argv) {
         describe: 'Output errors with source description',
         boolean: true,
       },
+      'working-directory': {
+        alias: 'cwd',
+        describe: 'Path to a directory that should be considered as the current working directory.',
+        type: 'string',
+        // defaulting to `.` here to refer to `process.cwd()`, setting the default to `process.cwd()` itself
+        // would make our snapshots unstable (and make the help output unaligned since most directory paths
+        // are fairly deep)
+        default: '.',
+      },
       'no-config-path': {
         describe:
           'Does not use the local template-lintrc, will use a blank template-lintrc instead',
         boolean: true,
       },
       'print-pending': {
-        describe: 'Print list of formated rules for use with `pending` in config file',
+        describe: 'Print list of formatted rules for use with `pending` in config file',
         boolean: true,
       },
       'ignore-pattern': {
@@ -157,6 +174,11 @@ function parseArgv(_argv) {
     parser.exit(1);
   } else {
     let options = parser.parse(_argv);
+
+    if (options.workingDirectory === '.') {
+      options.workingDirectory = process.cwd();
+    }
+
     return options;
   }
 }
@@ -213,6 +235,7 @@ async function run() {
   let linter;
   try {
     linter = new Linter({
+      workingDir: options.workingDirectory,
       configPath: options.configPath,
       config,
       rule: options.rule,
@@ -224,11 +247,12 @@ async function run() {
     return;
   }
 
-  let filePaths = getFilesToLint(positional, options.ignorePattern);
+  let filePaths = getFilesToLint(options.workingDirectory, positional, options.ignorePattern);
 
   let resultsAccumulator = [];
   for (let relativeFilePath of filePaths) {
     let linterOptions = await buildLinterOptions(
+      options.workingDirectory,
       relativeFilePath,
       options.filename,
       filePaths.has(STDIN)

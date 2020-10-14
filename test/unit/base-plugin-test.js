@@ -1,20 +1,22 @@
 'use strict';
 
-const { parse, transform } = require('ember-template-recast');
-const Rule = require('./../../lib/rules/base');
-const { determineRuleConfig } = require('./../../lib/get-config');
 const { readdirSync } = require('fs');
-const { join, parse: parsePath } = require('path');
+const path = require('path');
+
+const { parse, transform } = require('ember-template-recast');
+
+const EditorConfigResolver = require('../../lib/get-editor-config');
 const ruleNames = Object.keys(require('../../lib/rules'));
 const Project = require('../helpers/fake-project');
-const EditorConfigResolver = require('../../lib/get-editor-config');
+const { determineRuleConfig } = require('./../../lib/get-config');
+const Rule = require('./../../lib/rules/base');
 
 describe('base plugin', function () {
   let project, editorConfigResolver;
   beforeEach(() => {
     project = Project.defaultSetup();
 
-    editorConfigResolver = new EditorConfigResolver();
+    editorConfigResolver = new EditorConfigResolver(project.baseDir);
     editorConfigResolver.resolveEditorConfigFiles();
   });
 
@@ -89,15 +91,15 @@ describe('base plugin', function () {
   }
 
   it('all presets correctly reexported', function () {
-    const presetsPath = join(__dirname, '../../lib/config');
+    const presetsPath = path.join(__dirname, '../../lib/config');
 
     const files = readdirSync(presetsPath);
     const presetFiles = files
-      .map((it) => parsePath(it))
+      .map((it) => path.parse(it))
       .filter((it) => it.ext === '.js' && it.name !== 'index')
       .map((it) => it.name);
 
-    const exportedPresets = require(join(presetsPath, 'index.js'));
+    const exportedPresets = require(path.join(presetsPath, 'index.js'));
     const exportedPresetNames = Object.keys(exportedPresets);
 
     expect(exportedPresetNames).toEqual(presetFiles);
